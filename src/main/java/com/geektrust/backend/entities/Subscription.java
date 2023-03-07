@@ -39,13 +39,13 @@ public class Subscription extends BaseEntity{
         return this.plan.getCost();
     }
 
-    public String getPlanName(){
-        return this.plan.getPlanName();
-    }
+    // public String getPlanName(){
+    //     return this.plan.getPlanName();
+    // }
 
-    public int getPlanValidity(){
-        return this.plan.getDuration();
-    }
+    // public int getPlanValidity(){
+    //     return this.plan.getDuration();
+    // }
 
     @Override
     public String toString() {

@@ -83,9 +83,9 @@ public class User extends BaseEntity {
         return false;
     }
     
-    public int gettopupAmount(){
-        return this.topUp.getPerMonthCostInRupees();
-    }
+    // public int gettopupAmount(){
+    //     return this.topUp.getPerMonthCostInRupees();
+    // }
 
     
     

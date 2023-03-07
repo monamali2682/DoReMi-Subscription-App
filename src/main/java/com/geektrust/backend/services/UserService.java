@@ -119,7 +119,7 @@ public class UserService implements IUserService{
             printRenewalDTO.addRenewalAmount(subscription.getSubscriptionAmount());
         }
         if(user.getTopUp()!=null){
-            int topupAmount = user.gettopupAmount()*user.getTopupValidityInMonths();
+            int topupAmount = user.getTopUp().getPerMonthCostInRupees()*user.getTopupValidityInMonths();
             printRenewalDTO.addRenewalAmount(topupAmount);
         }
         return printRenewalDTO;

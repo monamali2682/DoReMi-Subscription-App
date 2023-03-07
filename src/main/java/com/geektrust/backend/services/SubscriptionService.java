@@ -21,7 +21,7 @@ public class SubscriptionService implements ISubscriptionService{
     public String getRenewalInfo(Subscription subscription) {
         String renewalInfo="";
         LocalDate startDate = subscription.getStartDate();
-        int validityInMonths= subscription.getPlanValidity();
+        int validityInMonths= subscription.getPlan().getDuration();
         String reminderDate = getReminderDate(startDate,validityInMonths);
         renewalInfo+= "RENEWAL_REMINDER " + subscription.getCategory() + " " + reminderDate;
         return renewalInfo;
@@ -31,7 +31,7 @@ public class SubscriptionService implements ISubscriptionService{
     public String getReminderDate(LocalDate startDate, int validityInMonths) {
         LocalDate subscritionEndDate = startDate.plusMonths(validityInMonths);
         LocalDate reminderDate = subscritionEndDate.minusDays(10);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-YYYY");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return reminderDate.format(formatter);
     }
 

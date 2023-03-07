@@ -90,7 +90,7 @@ public class UserTest {
         User user = new User(id, name, startDateOfSubscription, subscriptions, topUp, topupValidityInMonths);
         
         //Act
-        int topupAmount=user.gettopupAmount();
+        int topupAmount=user.getTopUp().getPerMonthCostInRupees();
 
         //Act and Assert
         Assertions.assertEquals(50,topupAmount);

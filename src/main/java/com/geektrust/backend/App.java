@@ -13,6 +13,7 @@ public class App {
 	public static void main(String[] args) {
 		List<String> commandLineArgs = new LinkedList<>(Arrays.asList(args));
         run(commandLineArgs);
+		
 	}
 
 	static void run(List<String> commandLineArgs) {
