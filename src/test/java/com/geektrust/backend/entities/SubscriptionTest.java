@@ -22,7 +22,7 @@ public class SubscriptionTest{
         //Act
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate newStartDate = LocalDate.parse("10-03-2022", formatter);
-        subscription.setStartDate(newStartDate);
+        subscription.modifyStartDate(newStartDate);
 
         //Act and Assert
         Assertions.assertEquals(subscription.getStartDate(),newStartDate);

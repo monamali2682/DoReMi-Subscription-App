@@ -44,7 +44,7 @@ public class SubscriptionService implements ISubscriptionService{
     }
 
     public Subscription modifyStartDate(Subscription subscription, LocalDate startDate) {
-        subscription.setStartDate(startDate);
+        subscription.modifyStartDate(startDate);
         Subscription savedSubscription = subscriptionRepository.save(subscription);
         return savedSubscription;
     }

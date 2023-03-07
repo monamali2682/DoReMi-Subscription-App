@@ -20,12 +20,8 @@ public class User extends BaseEntity {
     }
 
     public User(String id,String name, String startDateOfSubscription,List<Subscription> subscriptions, TopUp topUp, int topupValidityInMonths) {
+        this(name,startDateOfSubscription,subscriptions,topUp,topupValidityInMonths);
         this.id=id;
-        this.name = name;
-        this.startDateOfSubscription=startDateOfSubscription;
-        this.subscriptions = subscriptions;
-        this.topUp = topUp;
-        this.topupValidityInMonths=topupValidityInMonths;
     }
     
 
@@ -50,7 +46,7 @@ public class User extends BaseEntity {
         return topUp;
     }
 
-    public void setTopUp(TopUp topUp) {
+    public void modifyTopUp(TopUp topUp) {
         this.topUp = topUp;
     }
 
@@ -62,11 +58,11 @@ public class User extends BaseEntity {
         return topupValidityInMonths;
     }
 
-    public void setTopupValidityInMonths(int topupValidityInMonths) {
+    public void modifyTopupValidityInMonths(int topupValidityInMonths) {
         this.topupValidityInMonths = topupValidityInMonths;
     }
 
-    public void setStartDateOfSubscription(String startDateOfSubscription) {
+    public void modifyStartDateOfSubscription(String startDateOfSubscription) {
         this.startDateOfSubscription = startDateOfSubscription;
     }
 

@@ -54,7 +54,7 @@ public class UserService implements IUserService{
         if(!validateDate(date)){
             throw new InvalidDateException("INVALID_DATE");
         }
-        user.setStartDateOfSubscription(date);
+        user.modifyStartDateOfSubscription(date);
         userRepository.save(user);
         return true;
     }
@@ -93,12 +93,15 @@ public class UserService implements IUserService{
         if(user.getTopUp()!=null){
             throw new DuplicateTopupFoundException("ADD_TOPUP_FAILED DUPLICATE_TOPUP");
         }
+        if(user.getStartDateOfSubscription()==null){
+            throw new InvalidDateException("ADD_TOPUP_FAILED INVALID_DATE");
+        }
         if(user.getSubscriptions().isEmpty()){
             throw new SubscriptionsNotFoundException("ADD_TOPUP_FAILED SUBSCRIPTIONS_NOT_FOUND");
         }
         TopUp topup = topupService.getTopUp(topupName);
-        user.setTopUp(topup);
-        user.setTopupValidityInMonths(validityInMonths);
+        user.modifyTopUp(topup);
+        user.modifyTopupValidityInMonths(validityInMonths);
         userRepository.save(user);
         return true;
     }

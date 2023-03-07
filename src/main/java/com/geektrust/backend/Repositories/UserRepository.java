@@ -74,8 +74,8 @@ public class UserRepository implements IUserRepository{
     public User getUser(String string){
         User user;
         if(!findByName("user").isPresent()){
-            user = new User();
-            save(user);
+            User u = new User();
+            user = save(u);
         }
         else{
             user = findByName("user").orElseThrow(()-> new RuntimeException("User not found"));

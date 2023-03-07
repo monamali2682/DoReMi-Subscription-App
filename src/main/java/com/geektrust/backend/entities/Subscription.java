@@ -14,16 +14,13 @@ public class Subscription extends BaseEntity{
     }
 
     public Subscription(String category, LocalDate startDate, Plan plan) {
-        this.category = category;
+        this(category, plan);
         this.startDate = startDate;
-        this.plan = plan;
     }
 
     public Subscription(String id,String category, LocalDate startDate, Plan plan) {
+        this(category, startDate, plan);
         this.id=id;
-        this.category = category;
-        this.startDate = startDate;
-        this.plan = plan;
     }
 
     public String getCategory() {
@@ -55,7 +52,7 @@ public class Subscription extends BaseEntity{
         return "Subscription [category=" + category + ", plan=" + plan + "]";
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void modifyStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
    

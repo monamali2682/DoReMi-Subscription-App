@@ -17,12 +17,8 @@ public class Plan extends BaseEntity{
     }
 
     public Plan(String id,String category,String planName, int cost, int duration, int numberOfDevices) {
+        this(category, planName, cost, duration);
         this.id=id;
-        this.category=category;
-        this.planName = planName;
-        this.cost = cost;
-        this.duration = duration;
-        this.numberOfDevices = numberOfDevices;
     }
 
     public String getPlanName() {

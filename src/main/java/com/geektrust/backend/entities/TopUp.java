@@ -13,10 +13,8 @@ public class TopUp extends BaseEntity{
     }
     
     public TopUp(String id,  String topupName,int numberOfDevices,int costInRupees) {
+        this(topupName, numberOfDevices, costInRupees);
         this.id=id;
-        this.topupName= topupName;
-        this.numberOfDevices = numberOfDevices;
-        this.perMonthCostInRupees = costInRupees;
     }
 
     public int getNumberOfDevices() {
