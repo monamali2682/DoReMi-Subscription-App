@@ -106,28 +106,4 @@ public class TopupServiceTest{
         verify(userRepositoryMock,times(1)).getUser(anyString());
     }
 
-    // @Test
-    // @DisplayName("Add Topup Method Should Return True if Add Topup Is Successful")
-    // public void addTopup_ShouldReturnTrue_AddTopupSuccessful(){
-    //     //Arrange
-    //     String date = "11-01-2019";
-    //     DateTimeFormatter formatter= DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    //     LocalDate startDate = LocalDate.parse("11-01-2019",formatter);
-    //     Plan plan= new Plan("1", "MUSIC", "FREE", 0, 1, 1);
-    //     Subscription subscription = new Subscription("1", "MUSIC", startDate,plan);
-    //     List<Subscription> subscriptions = new ArrayList<>(Arrays.asList(subscription));
-    //     TopUp topup= null;
-    //     User user = new User("1","user",date,subscriptions,topup,0);
-    //     //topup= new TopUp("1", "FOUR_DEVICE", 4, 50);
-    //     // when(userRepositoryMock.getUser(anyString())).thenReturn(user);
-    //     // when(userRepositoryMock.save(any(User.class))).thenReturn(user);
-    //     // Optional<TopUp> topUp = Optional.of(topupService.addTopup("FOUR_DEVICE",4,50));
-    //     // when(topupRepositoryMock.findByname(anyString())).thenReturn(topUp);
-        
-    //     //Act & Assert
-    //     // Assertions.assertTrue(topupService.addTopUP("FOUR_DEVICE", 2));
-    //     // verify(userRepositoryMock,times(1)).getUser(anyString());
-    //     //verify(topupServiceMock,times(1)).getTopUp(anyString());
-    //     // verify(userRepositoryMock,times(1)).save(any(User.class));
-    // }
 }
