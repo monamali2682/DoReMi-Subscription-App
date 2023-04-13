@@ -100,64 +100,12 @@ public class UserServiceTest{
         verify(userRepositoryMock,times(1)).getUser(anyString());
     }
 
-    // @Test
-    // @DisplayName("Add Subscription Method Should Throw InvalidDateException if Start Date is null")
-    // public void addSubscription_ShouldThrowInvalidDateException_StartDateIsNull(){
-    //     //Arrange
-    //     String startDate = null;
-    //     List<Subscription> subscriptions = new ArrayList<>();
-    //     TopUp topup= null;
-    //     User user = new User("1","user",startDate,subscriptions,topup,0);
-    //     when(userRepositoryMock.getUser(anyString())).thenReturn(user);
-
-    //     //Act&
-    //     //Assert
-    //     Assertions.assertThrows(InvalidDateException.class, () -> userService.addSubscription("MUSIC", "FREE"));
-    //     verify(userRepositoryMock,times(1)).getUser(anyString());
-    // }
+    
 
     
 
     
 
-    @Test
-    @DisplayName("Print renewal Dates Should Throw SubscriptionsNotFoundException if subscriptions Is Empty")
-    public void printRenewalDates_ShouldThrowSubscriptionsNotFoundException_subscriptionsIsEmpty(){
-        //Arrange
-        String date = "11-01-2019";
-        List<Subscription> subscriptions = new ArrayList<>();
-        TopUp topup= null;
-        User user = new User("1","user",date,subscriptions,topup,0);
-        when(userRepositoryMock.getUser(anyString())).thenReturn(user);
-
-        //Act&
-        //Assert
-        Assertions.assertThrows(SubscriptionsNotFoundException.class, () -> userService.printRenewalDates());
-        verify(userRepositoryMock,times(1)).getUser(anyString());
-    }
-
-    @Test
-    @DisplayName("Print renewal Dates Should Return Print Renewal DTO")
-    public void printRenewalDates_ShouldReturnPrintRenewalDTO(){
-        //Arrange
-        String date = "11-01-2019";
-        DateTimeFormatter formatter= DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate startDate = LocalDate.parse("11-01-2019",formatter);
-        Plan plan= new Plan("1", "MUSIC", "PERSONAL", 100, 1, 1);
-        Subscription subscription = new Subscription("1", "MUSIC", startDate,plan);
-        List<Subscription> subscriptions = new ArrayList<>(Arrays.asList(subscription));
-        TopUp topup= new TopUp("1", "FOUR_DEVICE", 4, 50);
-        User user = new User("1","user",date,subscriptions,topup,2);
-        PrintRenewalDTO expectRenewalDTO = new PrintRenewalDTO(List.of("RENEWAL_REMINDER MUSIC 01-02-2019"),200);
-        when(userRepositoryMock.getUser(anyString())).thenReturn(user);
-        when(subscriptionServiceMock.getRenewalInfo(any(Subscription.class))).thenReturn("RENEWAL_REMINDER MUSIC 01-02-2019");
-
-        //Act&
-        PrintRenewalDTO actualRenewalDTO = userService.printRenewalDates();
-        //Assert
-        Assertions.assertEquals(expectRenewalDTO.toString(), actualRenewalDTO.toString());
-        verify(userRepositoryMock,times(1)).getUser(anyString());
-        verify(subscriptionServiceMock, times(1)).getRenewalInfo(subscription);
-    }
+    
     
 }

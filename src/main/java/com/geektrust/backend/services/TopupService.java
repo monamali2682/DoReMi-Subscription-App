@@ -5,6 +5,7 @@ import com.geektrust.backend.entities.User;
 import com.geektrust.backend.exceptions.DuplicateTopupFoundException;
 import com.geektrust.backend.exceptions.InvalidDateException;
 import com.geektrust.backend.exceptions.SubscriptionsNotFoundException;
+import java.util.Optional;
 import com.geektrust.backend.Repositories.ITopupRepository;
 import com.geektrust.backend.Repositories.IUserRepository;
 
@@ -19,7 +20,10 @@ public class TopupService implements ITopupService {
     
     @Override
     public TopUp getTopUp(String topupName){
-        TopUp topup = topupRepository.findByname(topupName).orElseThrow(()-> new RuntimeException("Topup not found"));
+        TopUp topup = topupRepository.findByname(topupName).get();
+        if(topup==null){
+            throw new RuntimeException("Topup not found");
+        }
         return topup;
     }
     

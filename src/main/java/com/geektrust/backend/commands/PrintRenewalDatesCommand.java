@@ -2,19 +2,20 @@ package com.geektrust.backend.commands;
 
 import java.util.List;
 import com.geektrust.backend.dtos.PrintRenewalDTO;
-import com.geektrust.backend.services.IUserService;
+import com.geektrust.backend.services.IPrintService;
+
 
 public class PrintRenewalDatesCommand implements ICommand{
-    private IUserService userService;
+    private  IPrintService printService;
     
-    public PrintRenewalDatesCommand(IUserService userService) {
-        this.userService = userService;
+    public PrintRenewalDatesCommand(IPrintService printService) {
+        this.printService = printService;
     }
 
     @Override
     public void execute(List<String> tokens) {
         try {
-            PrintRenewalDTO dto = userService.printRenewalDates();
+            PrintRenewalDTO dto = printService.printRenewalDates();
             System.out.println(dto);
         } catch (Exception e) {
             System.out.println(e.getMessage());

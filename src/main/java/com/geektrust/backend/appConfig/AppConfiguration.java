@@ -17,10 +17,12 @@ import com.geektrust.backend.Repositories.SubscriptionRepository;
 import com.geektrust.backend.Repositories.TopupRepository;
 import com.geektrust.backend.Repositories.UserRepository;
 import com.geektrust.backend.services.IPlanService;
+import com.geektrust.backend.services.IPrintService;
 import com.geektrust.backend.services.ISubscriptionService;
 import com.geektrust.backend.services.ITopupService;
 import com.geektrust.backend.services.IUserService;
 import com.geektrust.backend.services.PlanService;
+import com.geektrust.backend.services.PrintService;
 import com.geektrust.backend.services.SubscriptionService;
 import com.geektrust.backend.services.TopupService;
 import com.geektrust.backend.services.UserService;
@@ -67,7 +69,7 @@ public class AppConfiguration {
     private final ISubscriptionService subscriptionService = new SubscriptionService(subscriptionRepository,planService,userRepository);
     private final ITopupService topupService = new TopupService(topupRepository,userRepository);
     private final IUserService userService = new UserService(userRepository,subscriptionService,topupService);
-    
+    private final IPrintService printService = new PrintService(userRepository, subscriptionService);
 
     /* Adding all the predefined Plans to the database */
     Plan plan1= planService.addPlan("MUSIC","FREE", MUSIC_FREE_COST,FREE_DURATION);
@@ -89,7 +91,7 @@ public class AppConfiguration {
     private final ICommand startSubcriptionCommand = new StartSubcriptionCommand(userService);
     private final ICommand addSubscriptionCommand = new AddSubscriptionCommand(subscriptionService);
     private final ICommand addTopupCommand = new AddTopupCommand(topupService);
-    private final ICommand printRenewalDatesCommand = new PrintRenewalDatesCommand(userService);
+    private final ICommand printRenewalDatesCommand = new PrintRenewalDatesCommand(printService);
 
     public CommandInvoker getCommandInvoker(){
         registerCommands();

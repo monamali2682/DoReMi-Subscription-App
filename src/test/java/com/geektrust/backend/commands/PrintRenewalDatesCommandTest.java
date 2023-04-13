@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import com.geektrust.backend.dtos.PrintRenewalDTO;
 import com.geektrust.backend.exceptions.SubscriptionsNotFoundException;
+import com.geektrust.backend.services.PrintService;
 import com.geektrust.backend.services.UserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -30,7 +31,7 @@ public class PrintRenewalDatesCommandTest{
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
     @Mock
-    UserService userServiceMock;
+    PrintService printServiceMock;
 
     @InjectMocks
     PrintRenewalDatesCommand printRenewalDatesCommand;
@@ -47,14 +48,14 @@ public class PrintRenewalDatesCommandTest{
         
         //Arrange
         String expectedOutput = "SUBSCRIPTIONS_NOT_FOUND";
-        doThrow(new SubscriptionsNotFoundException(expectedOutput)).when(userServiceMock).printRenewalDates();
+        doThrow(new SubscriptionsNotFoundException(expectedOutput)).when(printServiceMock).printRenewalDates();
 
         //Act
         printRenewalDatesCommand.execute(List.of("PRINT_RENEWAL_DETAILS"));
          
         //Assert
         Assertions.assertEquals(expectedOutput, outputStreamCaptor.toString().trim());
-        verify(userServiceMock,times(1)).printRenewalDates();
+        verify(printServiceMock,times(1)).printRenewalDates();
     }
 
 
@@ -70,14 +71,14 @@ public class PrintRenewalDatesCommandTest{
 
         List<String> renewalReminders= new ArrayList<String>(Arrays.asList("RENEWAL_REMINDER MUSIC 10-03-2022", "RENEWAL_REMINDER VIDEO 10-05-2022","RENEWAL_REMINDER PODCAST 10-03-2022")); 
         int renewalAmount = 750;
-        when(userServiceMock.printRenewalDates()).thenReturn(new PrintRenewalDTO(renewalReminders, renewalAmount));
+        when(printServiceMock.printRenewalDates()).thenReturn(new PrintRenewalDTO(renewalReminders, renewalAmount));
 
         //Act
         printRenewalDatesCommand.execute(List.of("PRINT_RENEWAL_DETAILS"));
          
         //Assert
         Assertions.assertEquals(expectedOutput, outputStreamCaptor.toString().trim());
-        verify(userServiceMock,times(1)).printRenewalDates();
+        verify(printServiceMock,times(1)).printRenewalDates();
     }
 
 

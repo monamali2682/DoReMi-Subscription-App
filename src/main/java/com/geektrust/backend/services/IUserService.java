@@ -7,5 +7,5 @@ public interface IUserService {
     public boolean startSubscription(String date);
     //public boolean addSubscription(String subscriptionCategory, String planName);
     //public boolean addTopUP(String topupName, int months);
-    public PrintRenewalDTO printRenewalDates();
+    
 }
