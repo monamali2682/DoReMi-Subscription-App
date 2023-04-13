@@ -3,7 +3,7 @@ package com.geektrust.backend.entities;
 public abstract class BaseEntity {
     String id;
 
-    public String getId() {
+    public String fetchId() {
         return id;
     }
     

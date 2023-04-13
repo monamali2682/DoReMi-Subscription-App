@@ -9,6 +9,7 @@ import java.io.PrintStream;
 import java.util.List;
 import com.geektrust.backend.exceptions.DuplicateCategogySubscriptionException;
 import com.geektrust.backend.exceptions.InvalidDateException;
+import com.geektrust.backend.services.SubscriptionService;
 import com.geektrust.backend.services.UserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -28,7 +29,7 @@ public class AddSubscriptionCommandTest{
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
     @Mock
-    UserService userServiceMock;
+    SubscriptionService subscriptionServiceMock;
 
     @InjectMocks
     AddSubscriptionCommand addSubscriptionCommand;
@@ -47,14 +48,14 @@ public class AddSubscriptionCommandTest{
         String subscriptionCategory = "MUSIC";
         String planName = "PERSONAL";
         String expectedOutput = "ADD_SUBSCRIPTION_FAILED INVALID_DATE";
-        doThrow(new InvalidDateException(expectedOutput)).when(userServiceMock).addSubscription(subscriptionCategory, planName);
+        doThrow(new InvalidDateException(expectedOutput)).when(subscriptionServiceMock).addSubscription(subscriptionCategory, planName);
 
         //Act
         addSubscriptionCommand.execute(List.of("ADD_SUBSCRIPTION",subscriptionCategory,planName));
          
         //Assert
         Assertions.assertEquals(expectedOutput, outputStreamCaptor.toString().trim());
-        verify(userServiceMock,times(1)).addSubscription(subscriptionCategory, planName);
+        verify(subscriptionServiceMock,times(1)).addSubscription(subscriptionCategory, planName);
     }
 
 
@@ -66,14 +67,14 @@ public class AddSubscriptionCommandTest{
         String subscriptionCategory = "MUSIC";
         String planName = "PREMIUM";
         String expectedOutput = "ADD_SUBSCRIPTION_FAILED DUPLICATE_CATEGORY";
-        doThrow(new DuplicateCategogySubscriptionException(expectedOutput)).when(userServiceMock).addSubscription(subscriptionCategory, planName);
+        doThrow(new DuplicateCategogySubscriptionException(expectedOutput)).when(subscriptionServiceMock).addSubscription(subscriptionCategory, planName);
 
         //Act
         addSubscriptionCommand.execute(List.of("ADD_SUBSCRIPTION",subscriptionCategory,planName));
          
         //Assert
         Assertions.assertEquals(expectedOutput, outputStreamCaptor.toString().trim());
-        verify(userServiceMock,times(1)).addSubscription(subscriptionCategory, planName);
+        verify(subscriptionServiceMock,times(1)).addSubscription(subscriptionCategory, planName);
     }
 
 
@@ -85,14 +86,14 @@ public class AddSubscriptionCommandTest{
         String subscriptionCategory = "MUSIC";
         String planName = "PREMIUM";
         String expectedOutput = "";
-        when(userServiceMock.addSubscription(subscriptionCategory, planName)).thenReturn(true);
+        when(subscriptionServiceMock.addSubscription(subscriptionCategory, planName)).thenReturn(true);
 
         //Act
         addSubscriptionCommand.execute(List.of("ADD_SUBSCRIPTION",subscriptionCategory,planName));
          
         //Assert
         Assertions.assertEquals(expectedOutput, outputStreamCaptor.toString().trim());
-        verify(userServiceMock,times(1)).addSubscription(subscriptionCategory, planName);
+        verify(subscriptionServiceMock,times(1)).addSubscription(subscriptionCategory, planName);
     }
 
     

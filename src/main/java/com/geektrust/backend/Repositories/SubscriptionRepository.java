@@ -25,13 +25,13 @@ public class SubscriptionRepository implements ISubscriptionRepository {
 
     @Override
     public Subscription save(Subscription entity) {
-        if( entity.getId() == null ){
+        if( entity.fetchId() == null ){
             autoIncrement++;
-            Subscription subscription = new Subscription(Integer.toString(autoIncrement),entity.getCategory(),entity.getStartDate(),entity.getPlan());
-            map.put(subscription.getId(),subscription);
+            Subscription subscription = new Subscription(Integer.toString(autoIncrement),entity.fetchCategory(),entity.fetchStartDate(),entity.fetchPlan());
+            map.put(subscription.fetchId(),subscription);
             return subscription;
         }
-        map.put(entity.getId(),entity);
+        map.put(entity.fetchId(),entity);
         return entity;
     }
 
@@ -52,7 +52,7 @@ public class SubscriptionRepository implements ISubscriptionRepository {
 
     @Override
     public void delete(Subscription entity) {
-        map.remove(entity.getId());
+        map.remove(entity.fetchId());
     }
 
     @Override

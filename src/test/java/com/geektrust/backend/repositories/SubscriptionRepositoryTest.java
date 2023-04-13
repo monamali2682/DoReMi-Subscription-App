@@ -86,7 +86,7 @@ public class SubscriptionRepositoryTest {
         //Act
         Optional<Subscription> actualSubscription = subscriptionRepository.findById(expectedSubscriptionId);
         //Assert
-        Assertions.assertEquals(expectedSubscriptionId,actualSubscription.get().getId());
+        Assertions.assertEquals(expectedSubscriptionId,actualSubscription.get().fetchId());
     }
 
     @Test

@@ -23,7 +23,7 @@ public class PlanTest{
         plan.modifyNumberOfDevices(4);
 
         //Act and Assert
-        Assertions.assertEquals(plan.getNumberOfDevices(),4);
+        Assertions.assertEquals(plan.fetchNumberOfDevices(),4);
     }
     
 

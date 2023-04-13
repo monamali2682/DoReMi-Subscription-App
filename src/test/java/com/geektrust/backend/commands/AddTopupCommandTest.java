@@ -9,6 +9,7 @@ import java.io.PrintStream;
 import java.util.List;
 import com.geektrust.backend.exceptions.DuplicateTopupFoundException;
 import com.geektrust.backend.exceptions.SubscriptionsNotFoundException;
+import com.geektrust.backend.services.TopupService;
 import com.geektrust.backend.services.UserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -29,7 +30,7 @@ public class AddTopupCommandTest{
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
     @Mock
-    UserService userServiceMock;
+    TopupService topupServiceMock;
 
     @InjectMocks
     AddTopupCommand addTopupCommand;
@@ -48,14 +49,14 @@ public class AddTopupCommandTest{
         String topupName = "FOUR_DEVICE";
         String validityInMonths = "2";
         String expectedOutput = "ADD_TOPUP_FAILED SUBSCRIPTIONS_NOT_FOUND";
-        doThrow(new SubscriptionsNotFoundException(expectedOutput)).when(userServiceMock).addTopUP(topupName, Integer.parseInt(validityInMonths) );
+        doThrow(new SubscriptionsNotFoundException(expectedOutput)).when(topupServiceMock).addTopUP(topupName, Integer.parseInt(validityInMonths) );
 
         //Act
         addTopupCommand.execute(List.of("ADD_TOPUP",topupName,validityInMonths));
          
         //Assert
         Assertions.assertEquals(expectedOutput, outputStreamCaptor.toString().trim());
-        verify(userServiceMock,times(1)).addTopUP(topupName, Integer.parseInt(validityInMonths));
+        verify(topupServiceMock,times(1)).addTopUP(topupName, Integer.parseInt(validityInMonths));
     }
 
 
@@ -67,14 +68,14 @@ public class AddTopupCommandTest{
        String topupName = "FOUR_DEVICE";
        String validityInMonths = "2";
        String expectedOutput = "ADD_TOPUP_FAILED DUPLICATE_TOPUP";
-       doThrow(new DuplicateTopupFoundException(expectedOutput)).when(userServiceMock).addTopUP(topupName, Integer.parseInt(validityInMonths) );
+       doThrow(new DuplicateTopupFoundException(expectedOutput)).when(topupServiceMock).addTopUP(topupName, Integer.parseInt(validityInMonths) );
 
        //Act
        addTopupCommand.execute(List.of("ADD_TOPUP",topupName,validityInMonths));
         
        //Assert
        Assertions.assertEquals(expectedOutput, outputStreamCaptor.toString().trim());
-       verify(userServiceMock,times(1)).addTopUP(topupName, Integer.parseInt(validityInMonths));
+       verify(topupServiceMock,times(1)).addTopUP(topupName, Integer.parseInt(validityInMonths));
     }
 
 
@@ -86,14 +87,14 @@ public class AddTopupCommandTest{
        String topupName = "FOUR_DEVICE";
        String validityInMonths = "2";
        String expectedOutput = "";
-       when(userServiceMock.addTopUP(topupName, Integer.parseInt(validityInMonths))).thenReturn(true);
+       when(topupServiceMock.addTopUP(topupName, Integer.parseInt(validityInMonths))).thenReturn(true);
 
        //Act
        addTopupCommand.execute(List.of("ADD_TOPUP",topupName,validityInMonths));
         
        //Assert
        Assertions.assertEquals(expectedOutput, outputStreamCaptor.toString().trim());
-       verify(userServiceMock,times(1)).addTopUP(topupName, Integer.parseInt(validityInMonths));
+       verify(topupServiceMock,times(1)).addTopUP(topupName, Integer.parseInt(validityInMonths));
     }
 
 

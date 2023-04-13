@@ -24,13 +24,13 @@ public class PlanRepository implements IPlanRepository{
 
     @Override
     public Plan save(Plan entity) {
-        if( entity.getId() == null ){
+        if( entity.fetchId() == null ){
             autoIncrement++;
-            Plan plan = new Plan(Integer.toString(autoIncrement),entity.getCategory(),entity.getPlanName(),entity.getCost(),entity.getDuration(),entity.getNumberOfDevices());
-            map.put(plan.getId(),plan);
+            Plan plan = new Plan(Integer.toString(autoIncrement),entity.fetchCategory(),entity.fetchPlanName(),entity.fetchCost(),entity.fetchDuration(),entity.fetchNumberOfDevices());
+            map.put(plan.fetchId(),plan);
             return plan;
         }
-        map.put(entity.getId(),entity);
+        map.put(entity.fetchId(),entity);
         return entity;
     }
 
@@ -51,7 +51,7 @@ public class PlanRepository implements IPlanRepository{
 
     @Override
     public void delete(Plan entity) {
-        map.remove(entity.getId());
+        map.remove(entity.fetchId());
     }
 
     @Override
@@ -66,7 +66,7 @@ public class PlanRepository implements IPlanRepository{
 
     @Override
     public Optional<Plan> findByCategoryAndPlan(String category, String planName) {
-        return map.values().stream().filter(p -> p.getPlanName().equals( planName)).filter(s -> s.getCategory().equals(category)).findFirst();
+        return map.values().stream().filter(p -> p.fetchPlanName().equals( planName)).filter(s -> s.fetchCategory().equals(category)).findFirst();
     }
 
 }

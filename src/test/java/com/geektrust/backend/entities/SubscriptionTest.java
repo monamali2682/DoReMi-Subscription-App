@@ -25,7 +25,7 @@ public class SubscriptionTest{
         subscription.modifyStartDate(newStartDate);
 
         //Act and Assert
-        Assertions.assertEquals(subscription.getStartDate(),newStartDate);
+        Assertions.assertEquals(subscription.fetchStartDate(),newStartDate);
     }
    
 }

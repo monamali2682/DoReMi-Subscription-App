@@ -1,14 +1,13 @@
 package com.geektrust.backend.commands;
 
 import java.util.List;
-import com.geektrust.backend.services.IUserService;
+import com.geektrust.backend.services.ISubscriptionService;
 
 public class AddSubscriptionCommand implements ICommand {
-    IUserService userService;
-    
+    ISubscriptionService subscriptionService;
 
-    public AddSubscriptionCommand(IUserService userService) {
-        this.userService = userService;
+    public AddSubscriptionCommand(ISubscriptionService subscriptionService) {
+        this.subscriptionService = subscriptionService;
     }
 
     @Override
@@ -16,7 +15,7 @@ public class AddSubscriptionCommand implements ICommand {
         String subscriptionCategory = tokens.get(1);
         String planName = tokens.get(2);
         try {
-            boolean response =userService.addSubscription(subscriptionCategory, planName);
+            boolean response =subscriptionService.addSubscription(subscriptionCategory, planName);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

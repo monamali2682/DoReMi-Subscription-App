@@ -73,7 +73,7 @@ public class UserTest {
         user.addSubscription(subscription);
 
         //Act and Assert
-        Assertions.assertEquals(subscription,user.getSubscriptions().get(0));
+        Assertions.assertEquals(subscription,user.fetchSubscriptions().get(0));
     }
 
 
@@ -90,7 +90,7 @@ public class UserTest {
         User user = new User(id, name, startDateOfSubscription, subscriptions, topUp, topupValidityInMonths);
         
         //Act
-        int topupAmount=user.getTopUp().getPerMonthCostInRupees();
+        int topupAmount=user.fetchTopUp().fetchPerMonthCostInRupees();
 
         //Act and Assert
         Assertions.assertEquals(50,topupAmount);

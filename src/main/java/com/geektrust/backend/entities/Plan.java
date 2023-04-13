@@ -21,19 +21,19 @@ public class Plan extends BaseEntity{
         this.id=id;
     }
 
-    public String getPlanName() {
+    public String fetchPlanName() {
         return planName;
     }
 
-    public int getCost() {
+    public int fetchCost() {
         return cost;
     }
 
-    public int getDuration() {
+    public int fetchDuration() {
         return duration;
     }
 
-    public int getNumberOfDevices() {
+    public int fetchNumberOfDevices() {
         return numberOfDevices;
     }
 
@@ -41,7 +41,7 @@ public class Plan extends BaseEntity{
         this.numberOfDevices=devices;
     }
 
-    public String getCategory() {
+    public String fetchCategory() {
         return category;
     }
     

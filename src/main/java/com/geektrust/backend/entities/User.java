@@ -34,15 +34,15 @@ public class User extends BaseEntity {
         this.topupValidityInMonths = topupValidityInMonths;
     }
 
-    public String getName() {
+    public String fetchName() {
         return name;
     }
 
-    public List<Subscription> getSubscriptions() {
+    public List<Subscription> fetchSubscriptions() {
         return subscriptions;
     }
 
-    public TopUp getTopUp() {
+    public TopUp fetchTopUp() {
         return topUp;
     }
 
@@ -50,11 +50,11 @@ public class User extends BaseEntity {
         this.topUp = topUp;
     }
 
-    public String getStartDateOfSubscription() {
+    public String fetchStartDateOfSubscription() {
         return startDateOfSubscription;
     }
 
-    public int getTopupValidityInMonths() {
+    public int fetchTopupValidityInMonths() {
         return topupValidityInMonths;
     }
 
@@ -78,7 +78,7 @@ public class User extends BaseEntity {
 
     public boolean isSubscriptionCategoryPresent(String category) {
         for(Subscription subscription:subscriptions){
-            if(subscription.getCategory().equals(category)) return true;
+            if(subscription.fetchCategory().equals(category)) return true;
         }
         return false;
     }

@@ -9,5 +9,6 @@ public interface ISubscriptionService {
     public Subscription createSubscription(String subscriptionCategory, String planName);
     public Subscription modifyStartDate(Subscription subscription, LocalDate startDate);
     public String getReminderDate(LocalDate startDate, int validityInMonths);
+    public boolean addSubscription(String subscriptionCategory, String planName);
     
 }

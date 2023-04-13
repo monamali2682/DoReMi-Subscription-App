@@ -71,7 +71,7 @@ public class PlanRepositoryTest{
         //Act
         Optional<Plan> actualPlan = planRepository.findById(expectedPlanId);
         //Assert
-        Assertions.assertEquals(expectedPlanId,actualPlan.get().getId());
+        Assertions.assertEquals(expectedPlanId,actualPlan.get().fetchId());
     }
 
     @Test

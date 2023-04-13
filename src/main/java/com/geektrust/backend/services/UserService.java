@@ -60,66 +60,20 @@ public class UserService implements IUserService{
     }
 
 
-   @ Override
-    public boolean addSubscription(String subscriptionCategory, String planName){
-        /*Optional requirement :- User name can also be provided 
-         * Here for simplicity, we will use the name "user" , that we provided while creating the user instance in START_SUBSCRIPTION command
-        */
-        User user= userRepository.getUser("user");
-        if(user.getStartDateOfSubscription()==null){
-            throw new InvalidDateException("ADD_SUBSCRIPTION_FAILED INVALID_DATE");
-        }
-        if(user.isSubscriptionCategoryPresent(subscriptionCategory)){
-            throw new DuplicateCategogySubscriptionException("ADD_SUBSCRIPTION_FAILED DUPLICATE_CATEGORY");
-        }
-
-        Subscription subscription = subscriptionService.createSubscription(subscriptionCategory, planName);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate startDate = LocalDate.parse(user.getStartDateOfSubscription(),formatter);
-        Subscription subscriptionModified= subscriptionService.modifyStartDate(subscription, startDate);
-        user.addSubscription(subscriptionModified);
-        userRepository.save(user);
-        return true;
-    }
-
-
-
-    @Override
-    public boolean addTopUP(String topupName, int validityInMonths){
-        /*Optional requirement :- User name can also be provided 
-         * Here for simplicity, we will use the name "user" , that we provided while creating the user instance in START_SUBSCRIPTION command
-        */
-        User user= userRepository.getUser("user");
-        if(user.getTopUp()!=null){
-            throw new DuplicateTopupFoundException("ADD_TOPUP_FAILED DUPLICATE_TOPUP");
-        }
-        if(user.getStartDateOfSubscription()==null){
-            throw new InvalidDateException("ADD_TOPUP_FAILED INVALID_DATE");
-        }
-        if(user.getSubscriptions().isEmpty()){
-            throw new SubscriptionsNotFoundException("ADD_TOPUP_FAILED SUBSCRIPTIONS_NOT_FOUND");
-        }
-        TopUp topup = topupService.getTopUp(topupName);
-        user.modifyTopUp(topup);
-        user.modifyTopupValidityInMonths(validityInMonths);
-        userRepository.save(user);
-        return true;
-    }
-
     @Override
     public PrintRenewalDTO printRenewalDates(){
         User user= userRepository.getUser("user");
-        if(user.getSubscriptions().isEmpty()){
+        if(user.fetchSubscriptions().isEmpty()){
             throw new SubscriptionsNotFoundException("SUBSCRIPTIONS_NOT_FOUND");
         }
         PrintRenewalDTO printRenewalDTO = new PrintRenewalDTO();
-        for(Subscription subscription : user.getSubscriptions()){
+        for(Subscription subscription : user.fetchSubscriptions()){
             String renewalInfo= subscriptionService.getRenewalInfo(subscription);
             printRenewalDTO.addRenewalReminder(renewalInfo);
-            printRenewalDTO.addRenewalAmount(subscription.getSubscriptionAmount());
+            printRenewalDTO.addRenewalAmount(subscription.fetchSubscriptionAmount());
         }
-        if(user.getTopUp()!=null){
-            int topupAmount = user.getTopUp().getPerMonthCostInRupees()*user.getTopupValidityInMonths();
+        if(user.fetchTopUp()!=null){
+            int topupAmount = user.fetchTopUp().fetchPerMonthCostInRupees()*user.fetchTopupValidityInMonths();
             printRenewalDTO.addRenewalAmount(topupAmount);
         }
         return printRenewalDTO;

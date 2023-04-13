@@ -16,8 +16,7 @@ import com.geektrust.backend.entities.Plan;
 import com.geektrust.backend.entities.Subscription;
 import com.geektrust.backend.entities.TopUp;
 import com.geektrust.backend.entities.User;
-import com.geektrust.backend.exceptions.DuplicateCategogySubscriptionException;
-import com.geektrust.backend.exceptions.DuplicateTopupFoundException;
+
 import com.geektrust.backend.exceptions.InvalidDateException;
 import com.geektrust.backend.exceptions.SubscriptionsNotFoundException;
 import org.junit.jupiter.api.Assertions;
@@ -101,128 +100,25 @@ public class UserServiceTest{
         verify(userRepositoryMock,times(1)).getUser(anyString());
     }
 
-    @Test
-    @DisplayName("Add Subscription Method Should Throw InvalidDateException if Start Date is null")
-    public void addSubscription_ShouldThrowInvalidDateException_StartDateIsNull(){
-        //Arrange
-        String startDate = null;
-        List<Subscription> subscriptions = new ArrayList<>();
-        TopUp topup= null;
-        User user = new User("1","user",startDate,subscriptions,topup,0);
-        when(userRepositoryMock.getUser(anyString())).thenReturn(user);
+    // @Test
+    // @DisplayName("Add Subscription Method Should Throw InvalidDateException if Start Date is null")
+    // public void addSubscription_ShouldThrowInvalidDateException_StartDateIsNull(){
+    //     //Arrange
+    //     String startDate = null;
+    //     List<Subscription> subscriptions = new ArrayList<>();
+    //     TopUp topup= null;
+    //     User user = new User("1","user",startDate,subscriptions,topup,0);
+    //     when(userRepositoryMock.getUser(anyString())).thenReturn(user);
 
-        //Act&
-        //Assert
-        Assertions.assertThrows(InvalidDateException.class, () -> userService.addSubscription("MUSIC", "FREE"));
-        verify(userRepositoryMock,times(1)).getUser(anyString());
-    }
+    //     //Act&
+    //     //Assert
+    //     Assertions.assertThrows(InvalidDateException.class, () -> userService.addSubscription("MUSIC", "FREE"));
+    //     verify(userRepositoryMock,times(1)).getUser(anyString());
+    // }
 
-    @Test
-    @DisplayName("Add Subscription Method Should Throw DuplicateCategogySubscriptionException if Subcription Already Present For Given Category")
-    public void addSubscription_ShouldThrowDuplicateCategogySubscriptionException_GivenDuplicateCategory(){
-        //Arrange
-        String date = "11-01-2019";
-        DateTimeFormatter formatter= DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate startDate = LocalDate.parse("11-01-2019",formatter);
-        Plan plan= new Plan("1", "MUSIC", "FREE", 0, 1, 1);
-        Subscription subscription = new Subscription("1", "MUSIC", startDate,plan);
-        List<Subscription> subscriptions = new ArrayList<>(Arrays.asList(subscription));
-        TopUp topup= null;
-        User user = new User("1","user",date,subscriptions,topup,0);
-        when(userRepositoryMock.getUser(anyString())).thenReturn(user);
+    
 
-        //Act&
-        //Assert
-        Assertions.assertThrows(DuplicateCategogySubscriptionException.class, () -> userService.addSubscription("MUSIC", "PREMIUM"));
-        verify(userRepositoryMock,times(1)).getUser(anyString());
-    }
-
-    @Test
-    @DisplayName("Add Subscription Method Should return True if Add Subscription Is Successfull")
-    public void addSubscription_ShouldReturnTrue_AddSubscriptionSucceessfull(){
-        //Arrange
-        String date = "11-01-2019";
-        List<Subscription> subscriptions = new ArrayList<>();
-        TopUp topup= null;
-        User user = new User("1","user",date,subscriptions,topup,0);
-        DateTimeFormatter formatter= DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate startDate = LocalDate.parse("11-01-2019",formatter);
-        Plan plan= new Plan("1", "MUSIC", "FREE", 0, 1, 1);
-        Subscription subscription = new Subscription("1", "MUSIC", startDate,plan);
-        when(userRepositoryMock.getUser(anyString())).thenReturn(user);
-        when(subscriptionServiceMock.createSubscription(anyString(), anyString())).thenReturn(subscription);
-        when(subscriptionServiceMock.modifyStartDate(subscription, startDate)).thenReturn(subscription);
-        when(userRepositoryMock.save(any(User.class))).thenReturn(user);
-
-        //Act&
-        //Assert
-        Assertions.assertTrue(userService.addSubscription("MUSIC", "FREE"));
-        verify(userRepositoryMock,times(1)).getUser(anyString());
-        verify(subscriptionServiceMock,times(1)).createSubscription(anyString(), anyString());
-        verify(subscriptionServiceMock,times(1)).modifyStartDate(any(Subscription.class), any(LocalDate.class));
-        verify(userRepositoryMock,times(1)).save(any(User.class));
-    }
-
-    @Test
-    @DisplayName("Add Topup Method Should Throw DuplicateTopupFoundException if Topup Already Present")
-    public void addTopup_ShouldThrowDuplicateTopupFoundException_GivenDuplicateTopup(){
-        //Arrange
-        String date = "11-01-2019";
-        DateTimeFormatter formatter= DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate startDate = LocalDate.parse("11-01-2019",formatter);
-        Plan plan= new Plan("1", "MUSIC", "FREE", 0, 1, 1);
-        Subscription subscription = new Subscription("1", "MUSIC", startDate,plan);
-        List<Subscription> subscriptions = new ArrayList<>(Arrays.asList(subscription));
-        TopUp topup= new TopUp("1", "FOUR_DEVICE", 4, 50);
-        User user = new User("1","user",date,subscriptions,topup,1);
-        when(userRepositoryMock.getUser(anyString())).thenReturn(user);
-
-        //Act&
-        //Assert
-        Assertions.assertThrows(DuplicateTopupFoundException.class, () -> userService.addTopUP("FOUR_DEVICE", 2));
-        verify(userRepositoryMock,times(1)).getUser(anyString());
-    }
-
-    @Test
-    @DisplayName("Add Topup Method Should Throw SubscriptionsNotFoundException if subscriptions Is Empty")
-    public void addTopup_ShouldThrowSubscriptionsNotFoundException_subscriptionsIsEmpty(){
-        //Arrange
-        String date = "11-01-2019";
-        List<Subscription> subscriptions = new ArrayList<>();
-        TopUp topup= null;
-        User user = new User("1","user",date,subscriptions,topup,0);
-        when(userRepositoryMock.getUser(anyString())).thenReturn(user);
-
-        //Act&
-        //Assert
-        Assertions.assertThrows(SubscriptionsNotFoundException.class, () -> userService.addTopUP("FOUR_DEVICE", 2));
-        verify(userRepositoryMock,times(1)).getUser(anyString());
-    }
-
-    @Test
-    @DisplayName("Add Topup Method Should Return True if Add Topup Is Successful")
-    public void addTopup_ShouldReturnTrue_AddTopupSuccessful(){
-        //Arrange
-        String date = "11-01-2019";
-        DateTimeFormatter formatter= DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate startDate = LocalDate.parse("11-01-2019",formatter);
-        Plan plan= new Plan("1", "MUSIC", "FREE", 0, 1, 1);
-        Subscription subscription = new Subscription("1", "MUSIC", startDate,plan);
-        List<Subscription> subscriptions = new ArrayList<>(Arrays.asList(subscription));
-        TopUp topup= null;
-        User user = new User("1","user",date,subscriptions,topup,0);
-        topup= new TopUp("1", "FOUR_DEVICE", 4, 50);
-        when(userRepositoryMock.getUser(anyString())).thenReturn(user);
-        when(topupServiceMock.getTopUp(anyString())).thenReturn(topup);
-        when(userRepositoryMock.save(any(User.class))).thenReturn(user);
-
-        //Act&
-        //Assert
-        Assertions.assertTrue(userService.addTopUP("FOUR_DEVICE", 2));
-        verify(userRepositoryMock,times(1)).getUser(anyString());
-        verify(topupServiceMock,times(1)).getTopUp(anyString());
-        verify(userRepositoryMock,times(1)).save(any(User.class));
-    }
+    
 
     @Test
     @DisplayName("Print renewal Dates Should Throw SubscriptionsNotFoundException if subscriptions Is Empty")

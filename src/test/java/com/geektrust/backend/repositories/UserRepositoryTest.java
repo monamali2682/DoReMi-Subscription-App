@@ -81,7 +81,7 @@ public class UserRepositoryTest{
         //Act
         Optional<User> actualUser = userRepository.findById(expectedUserId);
         //Assert
-        Assertions.assertEquals(expectedUserId,actualUser.get().getId());
+        Assertions.assertEquals(expectedUserId,actualUser.get().fetchId());
     }
 
     @Test

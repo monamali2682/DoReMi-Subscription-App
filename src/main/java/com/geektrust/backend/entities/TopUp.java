@@ -17,15 +17,15 @@ public class TopUp extends BaseEntity{
         this.id=id;
     }
 
-    public int getNumberOfDevices() {
+    public int fetchNumberOfDevices() {
         return numberOfDevices;
     }
     
-    public String getTopupName() {
+    public String fetchTopupName() {
         return topupName;
     }
 
-    public int getPerMonthCostInRupees() {
+    public int fetchPerMonthCostInRupees() {
         return perMonthCostInRupees;
     }
     

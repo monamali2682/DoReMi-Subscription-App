@@ -26,13 +26,13 @@ public class TopupRepository implements ITopupRepository{
 
     @Override
     public TopUp save(TopUp entity) {
-        if( entity.getId() == null ){
+        if( entity.fetchId() == null ){
             autoIncrement++;
-            TopUp topup = new TopUp(Integer.toString(autoIncrement),entity.getTopupName(),entity.getNumberOfDevices(),entity.getPerMonthCostInRupees());
-            map.put(topup.getId(),topup);
+            TopUp topup = new TopUp(Integer.toString(autoIncrement),entity.fetchTopupName(),entity.fetchNumberOfDevices(),entity.fetchPerMonthCostInRupees());
+            map.put(topup.fetchId(),topup);
             return topup;
         }
-        map.put(entity.getId(),entity);
+        map.put(entity.fetchId(),entity);
         return entity;
     }
 
@@ -57,7 +57,7 @@ public class TopupRepository implements ITopupRepository{
 
     @Override
     public void delete(TopUp entity) {
-        map.remove(entity.getId());
+        map.remove(entity.fetchId());
     }
 
 
@@ -74,6 +74,6 @@ public class TopupRepository implements ITopupRepository{
 
     @Override
     public Optional<TopUp> findByname(String topupName) {
-        return map.values().stream().filter(p -> p.getTopupName().equals(topupName)).findFirst();
+        return map.values().stream().filter(p -> p.fetchTopupName().equals(topupName)).findFirst();
     }
 }

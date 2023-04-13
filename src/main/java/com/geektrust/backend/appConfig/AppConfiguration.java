@@ -39,37 +39,56 @@ public class AppConfiguration {
         return instance;
     }
 
+    /*  Constants */
+    private final int MUSIC_FREE_COST=0;
+    private final int MUSIC_PERSONAL_COST=100;
+    private final int MUSIC_PREMIUM_COST=250;
+    private final int VIDEO_FREE_COST=0;
+    private final int VIDEO_PERSONAL_COST=200;
+    private final int VIDEO_PREMIUM_COST=500;
+    private final int PODCAST_FREE_COST=0;
+    private final int PODCAST_PERSONAL_COST=100;
+    private final int PODCAST_PREMIUM_COST=300;
+    private final int FREE_DURATION=1;
+    private final int PERSONAL_DURATION=1;
+    private final int PREMIUM_DURATION=3;
+    private final int FOUR_DEVICE_TOPUP_NUMBER_OF_DEVICES=4;
+    private final int FOUR_DEVICE_TOPUP_COST=50;
+    private final int TEN_DEVICE_TOPUP_NUMBER_OF_DEVICES=10;
+    private final int TEN_DEVICE_TOPUP_COST=100;
+   
+
     private final IUserRepository userRepository = new UserRepository();
     private final ISubscriptionRepository subscriptionRepository = new SubscriptionRepository();
     private final IPlanRepository planRepository = new PlanRepository();
     private final ITopupRepository topupRepository = new TopupRepository();
 
     private final IPlanService planService = new PlanService(planRepository);
-    private final ISubscriptionService subscriptionService = new SubscriptionService(subscriptionRepository,planService);
-    private final ITopupService topupService = new TopupService(topupRepository);
+    private final ISubscriptionService subscriptionService = new SubscriptionService(subscriptionRepository,planService,userRepository);
+    private final ITopupService topupService = new TopupService(topupRepository,userRepository);
     private final IUserService userService = new UserService(userRepository,subscriptionService,topupService);
     
 
     /* Adding all the predefined Plans to the database */
-    Plan plan1= planService.addPlan("MUSIC","FREE", 0,1);
-    Plan plan2 = planService.addPlan("MUSIC","PERSONAL", 100,1);
-    Plan plan3 = planService.addPlan("MUSIC","PREMIUM", 250,3);
-    Plan plan4 = planService.addPlan("VIDEO","FREE", 0,1);
-    Plan plan5 = planService.addPlan("VIDEO","PERSONAL", 200,1);
-    Plan plan6 = planService.addPlan("VIDEO","PREMIUM", 500,3);
-    Plan plan7 = planService.addPlan("PODCAST","FREE", 0,1);
-    Plan plan8 = planService.addPlan("PODCAST","PERSONAL", 100,1);
-    Plan plan9 = planService.addPlan("PODCAST","PREMIUM", 300,3);
+    Plan plan1= planService.addPlan("MUSIC","FREE", MUSIC_FREE_COST,FREE_DURATION);
+    Plan plan2 = planService.addPlan("MUSIC","PERSONAL", MUSIC_PERSONAL_COST,PERSONAL_DURATION);
+    Plan plan3 = planService.addPlan("MUSIC","PREMIUM", MUSIC_PREMIUM_COST,PREMIUM_DURATION);
+    Plan plan4 = planService.addPlan("VIDEO","FREE", VIDEO_FREE_COST,FREE_DURATION);
+    Plan plan5 = planService.addPlan("VIDEO","PERSONAL", VIDEO_PERSONAL_COST,PERSONAL_DURATION);
+    Plan plan6 = planService.addPlan("VIDEO","PREMIUM", VIDEO_PREMIUM_COST,PREMIUM_DURATION);
+    Plan plan7 = planService.addPlan("PODCAST","FREE", PODCAST_FREE_COST,FREE_DURATION);
+    Plan plan8 = planService.addPlan("PODCAST","PERSONAL", PODCAST_PERSONAL_COST,PERSONAL_DURATION);
+    Plan plan9 = planService.addPlan("PODCAST","PREMIUM", PODCAST_PREMIUM_COST,PREMIUM_DURATION);
 
 
     /* Adding all the predefined topups to the database */
-    TopUp topUp1 = topupService.addTopup("FOUR_DEVICE", 4, 50);
-    TopUp topUp2 = topupService.addTopup("TEN_DEVICE", 10, 100);
+    TopUp topUp1 = topupService.addTopup("FOUR_DEVICE", FOUR_DEVICE_TOPUP_NUMBER_OF_DEVICES, FOUR_DEVICE_TOPUP_COST);
+    TopUp topUp2 = topupService.addTopup("TEN_DEVICE", TEN_DEVICE_TOPUP_NUMBER_OF_DEVICES, TEN_DEVICE_TOPUP_COST);
     
     
     private final ICommand startSubcriptionCommand = new StartSubcriptionCommand(userService);
-    private final ICommand addSubscriptionCommand = new AddSubscriptionCommand(userService);
-    private final ICommand addTopupCommand = new AddTopupCommand(userService);
+    private final ICommand addSubscriptionCommand = new AddSubscriptionCommand(subscriptionService);
+    private final ICommand addTopupCommand = new AddTopupCommand(topupService);
     private final ICommand printRenewalDatesCommand = new PrintRenewalDatesCommand(userService);
 
     public CommandInvoker getCommandInvoker(){

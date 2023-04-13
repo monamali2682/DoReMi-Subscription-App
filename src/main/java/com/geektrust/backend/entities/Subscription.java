@@ -23,20 +23,20 @@ public class Subscription extends BaseEntity{
         this.id=id;
     }
 
-    public String getCategory() {
+    public String fetchCategory() {
         return category;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDate fetchStartDate() {
         return startDate;
     }
 
-    public Plan getPlan() {
+    public Plan fetchPlan() {
         return plan;
     }
 
-    public int getSubscriptionAmount() {
-        return this.plan.getCost();
+    public int fetchSubscriptionAmount() {
+        return this.plan.fetchCost();
     }
 
     // public String getPlanName(){

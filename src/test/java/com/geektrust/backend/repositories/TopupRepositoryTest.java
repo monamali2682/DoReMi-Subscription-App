@@ -69,7 +69,7 @@ public class TopupRepositoryTest{
         //Act
         Optional<TopUp> actualTopup = topupRepository.findById(expectedTopupId);
         //Assert
-        Assertions.assertEquals(expectedTopupId,actualTopup.get().getId());
+        Assertions.assertEquals(expectedTopupId,actualTopup.get().fetchId());
     }
 
     @Test

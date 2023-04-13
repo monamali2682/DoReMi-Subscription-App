@@ -24,13 +24,13 @@ public class UserRepository implements IUserRepository{
 
     @Override
     public User save(User entity) {
-        if( entity.getId() == null ){
+        if( entity.fetchId() == null ){
             autoIncrement++;
-            User u = new User(Integer.toString(autoIncrement),entity.getName(),entity.getStartDateOfSubscription(),entity.getSubscriptions(),entity.getTopUp(),entity.getTopupValidityInMonths());
-            userMap.put(u.getId(),u);
+            User u = new User(Integer.toString(autoIncrement),entity.fetchName(),entity.fetchStartDateOfSubscription(),entity.fetchSubscriptions(),entity.fetchTopUp(),entity.fetchTopupValidityInMonths());
+            userMap.put(u.fetchId(),u);
             return u;
         }
-        userMap.put(entity.getId(),entity);
+        userMap.put(entity.fetchId(),entity);
         return entity;
     }
 
@@ -51,7 +51,7 @@ public class UserRepository implements IUserRepository{
 
     @Override
     public void delete(User entity) {
-        userMap.remove(entity.getId());
+        userMap.remove(entity.fetchId());
     }
 
     @Override
@@ -67,7 +67,7 @@ public class UserRepository implements IUserRepository{
 
     @Override
     public Optional<User> findByName(String name) {
-     return userMap.values().stream().filter(u -> u.getName().equals(name)).findFirst();
+     return userMap.values().stream().filter(u -> u.fetchName().equals(name)).findFirst();
     }
 
     @Override
