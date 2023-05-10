@@ -9,7 +9,7 @@ DoReMi is a streaming app which allows users to listen to music, podcasts and wa
   Once a user subscribes to a plan, the user needs to be notified 10 days before the plan expires. 
 
 **Commands**
-START_SUBSCRIPTION DD-MM-YYYY /n
+START_SUBSCRIPTION DD-MM-YYYY 
 ADD_SUBSCRIPTION SUBSCRIPTION_CATEGORY PLAN_NAME 
 ADD_TOPUP TOP_UP_NAME NO_OF_MONTHS 
 PRINT_RENEWAL_DETAILS 
