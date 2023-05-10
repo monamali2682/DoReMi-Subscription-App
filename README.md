@@ -41,11 +41,15 @@ RENEWAL_AMOUNT750
  When a user adds the same category of subscription or top up twice or more, error_code should be printed. Error code should be printed when the date format is wrong.
 
 **SAMPLE INPUT**
+
 START_SUBSCRIPTION07-19-2022
+
 ADD_SUBSCRIPTIONMUSIC PREMIUM
 
 **SAMPLE INPUT**
+
 INVALID_DATE
+
 ADD_SUBSCRIPTION_FAILEDINVALID_DATE
 
 
