@@ -1,3 +1,6 @@
+![geektrust](https://github.com/monamali2682/DoReMi-Subscription-App/assets/63638300/2d333deb-2c16-424c-8009-25ef66a54f1f)
+
+
 DoReMi is a streaming app which allows users to listen to music, podcasts and watch videos. They offer different subscription plans for different categories of services. Users can   subscribe to any of these plans. 
 - A user can choose only one plan per category. 
 - All plans, by default, can only be streamed on one device. 
